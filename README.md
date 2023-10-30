@@ -1,11 +1,11 @@
 # doan_totnghiep
-Activate environment python
+**Activate environment python**
 python -m venv venv
 
 ./venv/Scripts/activate 
-install library
+**install library**
 pip install -r requirements.txt
-migrate models to database
+**migrate models to database**
 alembic upgrade head
-run project
+**run project**
 uvicorn app.main:app --reload
