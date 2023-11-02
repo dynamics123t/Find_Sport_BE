@@ -8,7 +8,7 @@ from app.schemas.user import UserInfo
 
 class CommentBase(BaseModel):
     id: Optional[str] = None
-    id_post: Optional[str] = None
+    id_sport: Optional[str] = None
     content: Optional[str] = None
     image: Optional[str] = None
 
@@ -28,7 +28,7 @@ class CommentUpdate(BaseModel):
 
 class CommentResponse(BaseModel):
     id: Optional[str] = None
-    id_post: Optional[str] = None
+    id_sport: Optional[str] = None
     user: Optional[UserInfo] = None
     content: Optional[str] = None
     image: Optional[str] = None

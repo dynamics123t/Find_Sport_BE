@@ -40,7 +40,7 @@ def update_recomment(comment_update: RecommentUpdate, db: Session = Depends(get_
 
 
 @router.delete("/recomment/{pk}")
-def remove_recommnet(pk: str, user: User = Depends(get_current_user_active), db: Session = Depends(get_db)):
+def remove_recomment(pk: str, user: User = Depends(get_current_user_active), db: Session = Depends(get_db)):
     service = RecommentService(db=db)
     response = service.remove_recomment_by_id(user, pk)
     return make_response_json(data=response, status=200, message="deleted success")
