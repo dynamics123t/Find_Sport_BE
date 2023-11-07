@@ -24,6 +24,9 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
         current_user = db.query(User).filter(User.id == user_id).first()
         return current_user
 
+    def is_active(self, user:User):
+        return user.is_active
+
     @staticmethod
     def list_users(db: Session, skip: int = None, limit: int = None):
         total_users = db.query(User).count()

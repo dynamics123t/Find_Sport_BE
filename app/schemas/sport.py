@@ -5,23 +5,31 @@ from pydantic import BaseModel
 
 from app.schemas.user import UserInfo
 
+
 class SportBase(BaseModel):
-    id: Optional[str] = None
     name: Optional[str] = None
     img: Optional[str] = None
     address: Optional[str] = None
     price: Optional[str] = None
+    description: Optional[str] = None
+    phone: Optional[str] = None
+
 
     class Config:
         orm_mode = True
+
 
 class SportCreateParams(BaseModel):
     name: str
     img: str
     address: str
     price: str
+
+
 class SportCreate(SportBase):
-    pass
+    id: Optional[str] = None
+    created_by: Optional[str] = None
+
 
 class SportUpdate(BaseModel):
     name: Optional[str] = None
@@ -29,6 +37,7 @@ class SportUpdate(BaseModel):
     img: Optional[str] = None
     address: Optional[str] = None
     price: Optional[str] = None
+
 
 class SportResponse(BaseModel):
     id: Optional[str] = None
