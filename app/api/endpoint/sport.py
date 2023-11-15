@@ -1,4 +1,6 @@
-from fastapi import APIRouter
+import cloudinary
+from cloudinary import uploader
+from fastapi import APIRouter, UploadFile, File
 from fastapi import Depends
 from sqlalchemy.orm import Session
 
@@ -17,16 +19,24 @@ router = APIRouter()
 
 
 @router.post("/sport/create")
-async def create_sport(post: SportBase, user: User = Depends(oauth2.admin), db: Session = Depends(get_db)):
+async def create_sport(post: SportBase, user: User = Depends(oauth2.admin),
+                       db: Session = Depends(get_db)):
     sport_svr = PostService(db=db)
+    breakpoint()
     result = sport_svr.create_sport(post, user.id)
     return make_response_json(data=result, status=200, message="create success")
 
 
+@router.post("/upload")
+async def upload_image(file: UploadFile = File(...)):
+    result = cloudinary.uploader.upload(file.file, folder="sport")
+    return result.get("secure_url")
+
+
 @router.get("/sport/get_all")
-def get_spost_all(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
+def get_sport_all(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
     service = PostService(db=db)
-    result = service.get_all(skip= skip, limit=limit)
+    result = service.get_all(skip=skip, limit=limit)
     return {
         "status": 200,
         "data": result

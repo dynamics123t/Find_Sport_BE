@@ -14,6 +14,7 @@ class Sport(Base):
     price = Column(String(255), nullable=False)
     address = Column(String(255), nullable=True)
     phone = Column(String(255), nullable=False)
+    sports_field = Column(String(255), nullable=False)
     created_by = Column(String(), ForeignKey("user.id", ondelete="CASCADE", onupdate="CASCADE"))
     created_at = Column(TIMESTAMP(timezone=True), server_default=text("now()"))
     updated_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text("now()"),

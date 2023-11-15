@@ -13,6 +13,7 @@ class User(Base):
     phone = Column(String(255), nullable=True)
     avatar = Column(String(255), nullable=True)
     address = Column(String(255), nullable=False)
+    birthday = Column(String(255), nullable=True)
     is_active = Column(Boolean, nullable=False, server_default=text("false"))
     hashed_password = Column(String(255), nullable=True)
     verify_code = Column(String(255), nullable=True)

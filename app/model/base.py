@@ -29,6 +29,11 @@ class CourseType(str, Enum):
 class CourseRole(str, Enum):
     OWNER = "OWNER"
     MEMBER = "MEMBER"
+class TypeSport(str, Enum):
+    SOCCER = "SOCCER"
+    TENNIS = "TENNIS"
+    BASKETBALL = "BASKETBALL"
+    BADMINTON = "BADMINTON"
 
 
 class NotificationType(str, Enum):

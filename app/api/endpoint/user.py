@@ -1,6 +1,6 @@
 import logging
 
-from fastapi import APIRouter
+from fastapi import APIRouter, UploadFile, File
 from fastapi import Depends
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
@@ -19,11 +19,12 @@ from ...model.base import UserSystemRole
 logger = logging.getLogger(__name__)
 router = APIRouter()
 
+
 @router.get("/user/list")
-async def list_users(skip = 0,
-                    limit = 10,
-                    user: User = Depends(oauth2.admin),
-                    db: Session = Depends(get_db)):
+async def list_users(skip=0,
+                     limit=10,
+                     user: User = Depends(oauth2.admin),
+                     db: Session = Depends(get_db)):
     user_service = UserService(db=db)
     user_response = await user_service.list_users(skip=skip, limit=limit)
     return make_response_object(user_response)
@@ -31,7 +32,7 @@ async def list_users(skip = 0,
 
 @router.get("/user/me")
 async def read_me(user: User = Depends(oauth2.get_current_user),
-                db: Session = Depends(get_db)):
+                  db: Session = Depends(get_db)):
     user_service = UserService(db=db)
     user_response = await user_service.get_user_by_id(user_id=user.id)
     return make_response_object(user_response)
@@ -39,7 +40,7 @@ async def read_me(user: User = Depends(oauth2.get_current_user),
 
 @router.post("/auth/register")
 async def create_user(create_user: UserCreateParams,
-                       db: Session = Depends(get_db)):
+                      db: Session = Depends(get_db)):
     user_service = UserService(db=db)
     user_response = await user_service.create_user(create_user=create_user)
     return make_response_object(user_response)
@@ -54,7 +55,8 @@ async def login(login_request: LoginUser,
     created_access_token = create_access_token(data={"uid": current_user.id})
     created_refresh_token = create_refresh_token(data={"uid": current_user.id})
     return make_response_object(data=dict(access_token=created_access_token,
-                                              refresh_token=created_refresh_token))
+                                          refresh_token=created_refresh_token))
+
 
 @router.post("/auth/refresh")
 async def refresh_token(decoded_refresh_token=Depends(verify_refresh_token),
@@ -101,7 +103,6 @@ async def update_user_role(
         user_id: str,
         user: User = Depends(oauth2.admin),
         db: Session = Depends(get_db)):
-    
     user_service = UserService(db=db)
 
     user_response = await user_service.update_user_role(user_id=user_id, user_role=user_role)
@@ -115,12 +116,11 @@ async def verify_code(
         new_password: str,
         password_confirm: str,
         db: Session = Depends(get_db)):
-    
     user_service = UserService(db=db)
 
     user_response = await user_service.verify_code(email=email,
-                                                   verify_code=verify_code, 
-                                                   new_password=new_password, 
+                                                   verify_code=verify_code,
+                                                   new_password=new_password,
                                                    password_confirm=password_confirm)
 
     return make_response_object(user_response)
@@ -130,9 +130,20 @@ async def verify_code(
 async def forget_password(
         email: str,
         db: Session = Depends(get_db)):
-
     user_service = UserService(db=db)
 
     user_response = await user_service.get_verification_code(email=email, action="forget_password")
     logger.info("Endpoint_user: get_verification_code called successfully")
     return make_response_object(user_response)
+
+
+@router.post("/user/upload_avatar")
+async def upload_avatar(
+        file: UploadFile = File(...),
+        user: User = Depends(oauth2.get_current_active_user),
+        db: Session = Depends(get_db)):
+    user_service = UserService(db=db)
+
+    user_response = await user_service.update_avatar_to_user(user_id=user.id, file=file)
+    logger.info("Endpoint_user: get_verification_code called successfully")
+    return make_response_object(data=user_response, meta=dict(status=200, message="update thanh cong"))

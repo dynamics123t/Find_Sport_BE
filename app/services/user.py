@@ -4,15 +4,17 @@ import logging
 import string
 import secrets
 
+import cloudinary
+from cloudinary import uploader
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
+from fastapi import UploadFile
 from sqlalchemy.orm import Session
 from app.constant.app_status import AppStatus
 from app.utils import hash_lib
 from app.core.exceptions import error_exception_handler
 from app.core.settings import settings
-
 
 from ..schemas import UserCreate, UserCreateParams, UserUpdateParams, LoginUser, UserResponse, ChangePassword, UserBase
 from ..crud.user import crud_user
@@ -119,6 +121,13 @@ class UserService:
         if not current_user:
             raise error_exception_handler(error=Exception(), app_status=AppStatus.ERROR_USER_NOT_FOUND)
         result = crud_user.update_user(db=self.db, current_user=current_user, update_user=update_user)
+        return UserResponse.from_orm(result)
+
+    async def update_avatar_to_user(self, user_id: str, file: UploadFile):
+        current_user = crud_user.get(db=self.db, entry_id=user_id)
+        result = cloudinary.uploader.upload(file.file, folder="avatar")
+        data_update = dict(avatar=result.get("secure_url"))
+        result = crud_user.update(db=self.db, db_obj=current_user, obj_in=data_update)
         return UserResponse.from_orm(result)
 
     async def update_user_role(self, user_id: str, user_role: str):

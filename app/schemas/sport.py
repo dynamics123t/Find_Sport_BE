@@ -3,6 +3,7 @@ from typing import Optional
 
 from pydantic import BaseModel
 
+from app.model.base import TypeSport
 from app.schemas.user import UserInfo
 
 
@@ -13,6 +14,7 @@ class SportBase(BaseModel):
     price: Optional[str] = None
     description: Optional[str] = None
     phone: Optional[str] = None
+    sports_field: Optional[TypeSport] = TypeSport.SOCCER
 
 
     class Config:
@@ -37,7 +39,7 @@ class SportUpdate(BaseModel):
     img: Optional[str] = None
     address: Optional[str] = None
     price: Optional[str] = None
-
+    sports_field: Optional[TypeSport] = TypeSport.SOCCER
 
 class SportResponse(BaseModel):
     id: Optional[str] = None

@@ -32,7 +32,7 @@ class UserCreateParams(BaseModel):
 class UserUpdateParams(BaseModel):
     username: Optional[str] = None
     avatar: Optional[str] = None
-    full_name: Optional[str] = None
+    address: Optional[str] = None
     birthday: Optional[date] = None
     phone: Optional[str] = None
 

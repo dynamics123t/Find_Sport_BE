@@ -1,4 +1,5 @@
 import uvicorn
+import cloudinary
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
@@ -10,6 +11,11 @@ app = FastAPI(title="Sports", version="1.1.1")
 
 app.include_router(route, prefix="")
 
+cloudinary.config(
+    cloud_name=settings.CLOUD_NAME,
+    api_key=settings.API_KEY,
+    api_secret=settings.API_SECRET
+)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
