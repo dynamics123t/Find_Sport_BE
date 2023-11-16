@@ -139,11 +139,11 @@ async def forget_password(
 
 @router.post("/user/upload_avatar")
 async def upload_avatar(
-        file: UploadFile = File(...),
+        avatar: UploadFile = File(...),
         user: User = Depends(oauth2.get_current_active_user),
         db: Session = Depends(get_db)):
     user_service = UserService(db=db)
 
-    user_response = await user_service.update_avatar_to_user(user_id=user.id, file=file)
+    user_response = await user_service.update_avatar_to_user(user_id=user.id, file=avatar)
     logger.info("Endpoint_user: get_verification_code called successfully")
     return make_response_object(data=user_response, meta=dict(status=200, message="update thanh cong"))

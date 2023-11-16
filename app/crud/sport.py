@@ -43,9 +43,17 @@ class CRUDSport(CRUDBase[Sport, SportCreate, SportUpdate]):
             list_product = db_query.all()
         return total_product, list_product
 
-    def get_sport(self, db: Session, skip: int, limit: int):
-        result = db.query(self.model).offset(skip).limit(limit).all()
-        return result
+    def get_sport(self, db: Session,name:str, skip: int, limit: int):
+        db_query = db.query(self.model)
+        if name:
+            db_query = db_query.filter(self.model.name.like(f"%{name}%"))
+
+        count = db_query.count()
+        result = db_query.offset(skip).limit(limit).all()
+        return {
+            "result": result,
+            "count": count,
+        }
 
 
 sport = CRUDSport(Sport)

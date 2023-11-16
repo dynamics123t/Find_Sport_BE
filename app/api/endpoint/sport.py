@@ -22,7 +22,6 @@ router = APIRouter()
 async def create_sport(post: SportBase, user: User = Depends(oauth2.admin),
                        db: Session = Depends(get_db)):
     sport_svr = PostService(db=db)
-    breakpoint()
     result = sport_svr.create_sport(post, user.id)
     return make_response_json(data=result, status=200, message="create success")
 
@@ -34,9 +33,9 @@ async def upload_image(file: UploadFile = File(...)):
 
 
 @router.get("/sport/get_all")
-def get_sport_all(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
+def get_sport_all(name: str = None, skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
     service = PostService(db=db)
-    result = service.get_all(skip=skip, limit=limit)
+    result = service.get_all(name=name, skip=skip, limit=limit)
     return {
         "status": 200,
         "data": result
@@ -62,4 +61,11 @@ def delete_sport(sport_id: str, db: Session = Depends(get_db), user: User = Depe
 def get_sport_of_me(name: str, skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
     service = PostService(db=db)
     response, count = service.get_sport_of_me(name=name, skip=skip, limit=limit)
-    return make_response_json_4_param(data=response, count=count, status=200, message="thanh cong")
+    return (make_response_json_4_param(data=response, count=count, status=200, message="thanh cong"))
+
+
+@router.get("/sport/{sport_id}")
+def get_sport_by_id(sport_id: str, db: Session = Depends(get_db)):
+    service = PostService(db=db)
+    response = service.get_sport_by_id(sport_id=sport_id)
+    return make_response_json(data=response, status=200, message="thanh cong")

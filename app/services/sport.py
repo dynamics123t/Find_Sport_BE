@@ -29,7 +29,7 @@ class PostService:
         post_in = sport.get(db=self.db, entry_id=sport_id)
         if post_in is None:
             raise HTTPException(status_code=400, detail="SPORT NOT AVAILABLE")
-        result = sport.update(db=self.db,sport_id = sport_id, data_update=sport_update)
+        result = sport.update(db=self.db, sport_id=sport_id, data_update=sport_update)
         self.db.commit()
         return result
 
@@ -51,5 +51,9 @@ class PostService:
         response = []
         return response, count
 
-    def get_all(self, skip:int, limit: int):
-        return sport.get_sport(db=self.db, skip=skip, limit=limit)
+    def get_sport_by_id(self, sport_id: str):
+        result = sport.get(db=self.db, entry_id=sport_id)
+        return result
+
+    def get_all(self, name: str, skip: int, limit: int):
+        return sport.get_sport(db=self.db, name=name, skip=skip, limit=limit)
