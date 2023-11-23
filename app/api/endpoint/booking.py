@@ -24,7 +24,7 @@ async def create_booking(booking: BookingBase, db: Session = Depends(get_db),
 
 
 @router.get('/booking')
-async def get_booking(booking_id: str = None, skip: int = 0, limit: int = 0, db: Session = Depends(get_db),
+async def get_booking(booking_id: str = None, skip: int = 0, limit: int = 10, db: Session = Depends(get_db),
                       user: User = Depends(oauth2.get_current_active_user)):
     service = BookingService(db=db)
     result, count = await service.get_booking(booking_id=booking_id, skip=skip, limit=limit)
@@ -32,7 +32,7 @@ async def get_booking(booking_id: str = None, skip: int = 0, limit: int = 0, db:
 
 
 @router.get('/booking/sport')
-async def get_booking_of_sport(sport_id: str, date_booking: date, skip: int = 0, limit: int = 0,
+async def get_booking_of_sport(sport_id: str, date_booking: date, skip: int = 0, limit: int = 10,
                                db: Session = Depends(get_db),
                                user: User = Depends(oauth2.get_current_active_user)):
     service = BookingService(db=db)

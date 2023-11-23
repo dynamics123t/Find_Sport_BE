@@ -15,14 +15,14 @@ branch_labels = None
 depends_on = None
 
 mode_of_payment_enum = sa.Enum("CASH", "BANKING", name='mode_of_payment')
-status_enum = sa.Enum("DA_DAT", "HUY", "DA_NHAN_SAN", "QUA_HAN", name='mode_of_payment')
+status_enum = sa.Enum("DA_DAT", "HUY", "DA_NHAN_SAN", "QUA_HAN", name='status_enum')
 
 
 def upgrade() -> None:
     op.create_table('booking',
                     sa.Column('id', sa.String(length=255), nullable=False),
-                    sa.Column('time', sa.String(length=255), nullable=False),
-                    sa.Column('date', sa.Date(), server_default=sa.text('now()'), nullable=False),
+                    sa.Column('time_booking', sa.String(length=255), nullable=False),
+                    sa.Column('date_booking', sa.Date(), server_default=sa.text('now()'), nullable=False),
                     sa.Column('time_create', sa.DateTime(), nullable=False,
                               server_default=sa.text("(now() at time zone 'UTC')")),
                     sa.Column(
