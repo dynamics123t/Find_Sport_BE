@@ -27,5 +27,12 @@ class CRUDBooking(CRUDBase[Booking, BookingCreate, BookingUpdate]):
         db.bulk_save_objects(date_create)
         db.commit()
 
+    def get_bookings_of_user(self,db: Session, user_id: str, skip:int, limit:int):
+        db_query = db.query(self.model).filter(self.model.id_user==user_id)
+        count = db_query.count()
+        result = db_query.offset(skip).limit(limit).all()
+        return result, count
+
+
 
 booking = CRUDBooking(Booking)
