@@ -39,3 +39,7 @@ class BookingService:
         result = booking.get_list_booking_by_sport_id(db=self.db, sport_id=sport_id, date_booking=date_booking,
                                                       skip=skip, limit=limit)
         return result
+
+    async def get_booking_of_user(self, user_id: str, skip: int, limit: int):
+        result, count = booking.get_bookings_of_user(db=self.db, user_id=user_id, skip=skip, limit=limit)
+        return result, count

@@ -31,6 +31,14 @@ async def get_booking(booking_id: str = None, skip: int = 0, limit: int = 10, db
     return make_response_json_4_param(data=result, count=count, status=200, message="Success")
 
 
+@router.get("/booking/user")
+async def get_booking_of_user(skip: int = 0, limit: int = 10, db: Session = Depends(get_db),
+                              user: User = Depends(oauth2.get_current_active_user)):
+    service = BookingService(db=db)
+    result, count = await service.get_booking_of_user(user_id=user.id, skip=skip, limit=limit)
+    return make_response_json_4_param(data=result, count=count, status=200, message="success")
+
+
 @router.get('/booking/sport')
 async def get_booking_of_sport(sport_id: str, date_booking: date, skip: int = 0, limit: int = 10,
                                db: Session = Depends(get_db),

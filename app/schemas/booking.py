@@ -30,5 +30,5 @@ class BookingCreate(BookingBase):
 
 class BookingUpdate(BaseModel):
     id_sport: Optional[str] = None
-    time_booking: Optional[str] = None
+    time_booking: Optional[List[TimeBookingEnum]] = TimeBookingEnum.TIME_5H
     date_booking: Optional[date] = None
