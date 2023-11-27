@@ -39,6 +39,7 @@ class SportUpdate(BaseModel):
     img: Optional[str] = None
     address: Optional[str] = None
     price: Optional[str] = None
+    phone: Optional[str] = None
     sports_field: Optional[TypeSport] = TypeSport.SOCCER
 
 class SportResponse(BaseModel):

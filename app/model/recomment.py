@@ -21,5 +21,5 @@ class Recomment(Base):
     time_create = Column(DateTime, default=datetime.now)
 
     # Relationship
-    # user = relationship(User, back_populates="recomment")
-    # comment = relationship("Comment", back_populates="recomment")
+    user = relationship("User", back_populates="recomment")
+    comment = relationship("Comment", back_populates="recomment")

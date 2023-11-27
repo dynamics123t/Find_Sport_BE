@@ -22,3 +22,5 @@ class User(Base):
     updated_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text("now()"),
                         onupdate=func.current_timestamp())
 
+    comment = relationship("Comment", back_populates="user")
+    recomment = relationship("Recomment", back_populates="user")
