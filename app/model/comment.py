@@ -7,8 +7,6 @@ from sqlalchemy import String
 from sqlalchemy.orm import relationship
 
 from app.crud.base import Base
-from app.model.recomment import Recomment
-from app.model.user import User
 
 
 class Comment(Base):
@@ -22,5 +20,5 @@ class Comment(Base):
     time_create = Column(DateTime, default=datetime.now)
 
     # Relationship
-    # user = relationship(User, back_populates="comment")
-    # recomment = relationship(Recomment, back_populates="comment")
+    user = relationship("User", back_populates="comment")
+    recomment = relationship("Recomment", back_populates="comment")
