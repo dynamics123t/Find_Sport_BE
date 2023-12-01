@@ -75,3 +75,31 @@ class TimeBookingEnum(str, Enum):
     TIME_19H = "19:00 - 20:00"
     TIME_20H = "20:00 - 21:00"
     TIME_21H = "21:00 - 22:00"
+
+class LanguageType(str,Enum):
+    VIETNAMESE = 'vn'
+    ENGLISH = 'en'
+
+class BankCode(str, Enum):
+    NCB = "NCB"
+    AGRIBANK = "AGRIBANK"
+    SCB = "SCB"
+    SACOMBANK = "SACOMBANK"
+    EXIMBANK = "EXIMBANK"
+    MSBANK = "MSBANK"
+    NAMABANK = "NAMABANK"
+    VNMART = "VNMART"
+    VIETINBANK = "VIETINBANK"
+    VIETCOMBANK = "VIETCOMBANK"
+    HDBANK = "HDBANK"
+    DONGABANK = 'DONGABANK'
+    TPBANK = 'TPBANK'
+    OJB = 'OJB'
+    BIDV = 'BIDV'
+    TECHCOMBANK = 'TECHCOMBANK'
+    VPBANK = 'VPBANK'
+    MBBANK = 'MBBANK'
+    ACB = 'ACB'
+    OCB = 'OCB'
+    IVB = 'IVB'
+    VISA = 'VISA'
