@@ -36,6 +36,13 @@ class Settings(BaseSettings):
     EMAIL: str
     PASSWORD_EMAIL: str
 
+    # VNPAY CONFIG
+    VNPAY_RETURN_URL = 'http://localhost:8000/payment_return'  # get from config
+    VNPAY_PAYMENT_URL = 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html'  # get from config
+    VNPAY_API_URL = 'https://sandbox.vnpayment.vn/merchant_webapi/api/transaction'
+    VNPAY_TMN_CODE = 'RJ9YK2GT'  # Website ID in VNPAY System, get from config
+    VNPAY_HASH_SECRET_KEY = 'KQNRPNQNSSUDTSAAIFATZJDDEWVSPMHZ'  # Secret key for create checksum,get from config
+
     @property
     def SQLALCHEMY_DATABASE_URI(self) -> str:
         return f"postgresql://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@{self.POSTGRES_HOST}/{self.POSTGRES_DB}"

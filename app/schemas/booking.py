@@ -4,7 +4,7 @@ from typing import Optional, List
 
 from pydantic import BaseModel
 
-from app.model.base import TimeBookingEnum, ModeOfPaymentEnum
+from app.model.base import TimeBookingEnum, ModeOfPaymentEnum, LanguageType, BankCode
 
 
 class BookingBase(BaseModel):
@@ -13,6 +13,8 @@ class BookingBase(BaseModel):
     date_booking: Optional[date] = None
     mode_of_payment: Optional[ModeOfPaymentEnum] = ModeOfPaymentEnum.CASH
     payment_status: Optional[bool] = False
+    language: Optional[LanguageType] = LanguageType.VIETNAMESE
+    bank_code: Optional[BankCode] = BankCode.NCB
 
     class Config:
         orm_mode = True
@@ -30,5 +32,5 @@ class BookingCreate(BookingBase):
 
 class BookingUpdate(BaseModel):
     id_sport: Optional[str] = None
-    time_booking: Optional[List[TimeBookingEnum]] = TimeBookingEnum.TIME_5H
+    time_booking: Optional[TimeBookingEnum] = TimeBookingEnum.TIME_5H
     date_booking: Optional[date] = None

@@ -1,6 +1,6 @@
 from datetime import date
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Request
 from sqlalchemy.orm import Session
 
 from app.api.depend import oauth2
@@ -16,10 +16,10 @@ router = APIRouter()
 
 
 @router.post("/booking/create")
-async def create_booking(booking: BookingBase, db: Session = Depends(get_db),
+async def create_booking(request:Request, booking: BookingBase, db: Session = Depends(get_db),
                          user: User = Depends(oauth2.get_current_active_user)):
     service = BookingService(db=db)
-    result = await service.create_booking(request=booking, user_id=user.id)
+    result = await service.create_booking(booking_cr=booking, user_id=user.id, request=request)
     return make_response_object(result)
 
 
